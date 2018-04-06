@@ -41,10 +41,11 @@ end
 
 private_json_string = File.open(FIREBASE_SDK_JSON).read
 firebase = Firebase::Client.new(FIREBASE_URL, private_json_string)
-year = Date.new.year.to_s
-path = TOURNAMENTS+"/"+year
+year = Time.now.strftime("%Y").to_s
 
+path = TOURNAMENTS+"/"+year
+path    
 firebase.delete(path)
-pp firebase.set(path, records)
+firebase.set(path, records)
 pp firebase.get(path).body
 
