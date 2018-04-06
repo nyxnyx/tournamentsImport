@@ -3,6 +3,7 @@ require 'pp'
 require 'firebase'
 
 FIREBASE_URL='https://cioff-f755f.firebaseio.com/'
+FIREBASE_SDK_JSON='./cioff-f755f-firebase-adminsdk-6f7ey-c2c286e6b0.json'
 TOURNAMENTS="tournaments"
 
 records=[]
@@ -38,10 +39,12 @@ end
 
 #pp records
 
-private_json_string = File.open('cioff-f755f-firebase-adminsdk-6f7ey-c2c286e6b0.json').read
+private_json_string = File.open(FIREBASE_SDK_JSON).read
 firebase = Firebase::Client.new(FIREBASE_URL, private_json_string)
+year = Date.new.year.to_s
+path = TOURNAMENTS+"/"+year
 
-firebase.delete("tournaments/2018")
-pp firebase.set("tournaments/2018/", records)
-pp firebase.get("tournaments/2018/").body
+firebase.delete(path)
+pp firebase.set(path, records)
+pp firebase.get(path).body
 
